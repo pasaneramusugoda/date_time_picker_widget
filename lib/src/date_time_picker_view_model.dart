@@ -224,11 +224,14 @@ class DateTimePickerViewModel extends BaseViewModel {
       }
     }
 
-    if (toEnd)
-      for (int i = 1; i <= DateTime.saturday - date.weekday; i++) {
+    if (toEnd) {
+      int i = 1;
+      while (Jiffy(date.add(Duration(days: i))).week == Jiffy(date).week) {
         dates.add(
             Date(index: -1, date: date.add(Duration(days: i)), enabled: false));
+        i++;
       }
+    }
 
     return dates;
   }
