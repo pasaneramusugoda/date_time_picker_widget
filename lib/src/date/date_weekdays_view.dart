@@ -12,21 +12,20 @@ class DateWeekdaysView extends ViewModelWidget<DateTimePickerViewModel> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: model.weekdays
-            .map((e) =>
-            Container(
-              width: 32.0.w,
-              child: Text(
-                '${e['text']}',
-                style: TextStyle(
-                  fontSize: 18.0.ssp,
-                  color: e['value'] == model.selectedWeekday
-                      ? Colors.black
-                      : Colors.grey,
-                  fontWeight: FontWeight.w600,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ))
+            .map((e) => Container(
+                  width: 32.0.w,
+                  child: Text(
+                    '${e['text']}',
+                    style: TextStyle(
+                      fontSize: 18.0.ssp,
+                      color: e['value'] == model.selectedWeekday
+                          ? Colors.black
+                          : Colors.grey,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ))
             .toList(),
       ),
     );
