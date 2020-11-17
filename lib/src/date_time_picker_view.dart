@@ -44,14 +44,30 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
   Widget builder(
       BuildContext context, DateTimePickerViewModel model, Widget child) {
     if (type == DateTimePickerType.Both &&
-        (onDateChanged == null || onTimeChanged == null)) {
+        (onDateChanged == null || onTimeChanged == null))
       throw 'Ensure both onDateChanged and onTimeChanged are not null when type is DateTimePickerType.Both';
-    }
+
     if (type == DateTimePickerType.Date && onDateChanged == null)
       throw 'Ensure onDateChanged is not null when type is DateTimePickerType.Date';
 
     if (type == DateTimePickerType.Time && onTimeChanged == null)
       throw 'Ensure onTimeChanged is not null when type is DateTimePickerType.Time';
+
+    if (initialSelectedDate != null &&
+        startDate != null &&
+        !initialSelectedDate.isAfter(startDate))
+      throw 'initialSelectedDate must be a date after startDate';
+
+    if (initialSelectedDate != null &&
+        endDate != null &&
+        !initialSelectedDate.isAfter(endDate))
+      throw 'initialSelectedDate must be a date after endDate';
+
+    if (startDate != null && endDate != null && !endDate.isAfter(startDate))
+      throw 'endDate must be a date after startDate';
+
+    if (startTime != null && endTime != null && !endTime.isAfter(startTime))
+      throw 'endTime must be a time after startTime';
 
     try {
       ScreenUtil();

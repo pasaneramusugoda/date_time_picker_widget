@@ -101,6 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _dateTimePicker() {
+    var dt = DateTime.now();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -117,6 +118,16 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         SizedBox(height: 16.0),
         DateTimePicker(
+          initialSelectedDate: dt,
+          startDate: dt.add(Duration(days: 1)),
+          endDate: dt.add(Duration(days: 60)),
+          startTime: DateTime(dt.year, dt.month, dt.day, 6),
+          endTime: DateTime(dt.year, dt.month, dt.day, 18),
+          timeInterval: Duration(minutes: 15),
+          datePickerTitle: 'Pick your preferred date',
+          timePickerTitle: 'Pick your preferred time',
+          timeOutOfRangeError: 'Sorry shop is closed now',
+          is24h: false,
           onDateChanged: (date) {
             setState(() {
               _d1 = DateFormat('dd MMM, yyyy').format(date);
