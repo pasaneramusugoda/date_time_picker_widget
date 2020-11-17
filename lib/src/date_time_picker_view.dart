@@ -22,8 +22,8 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
   const DateTimePicker({
     Key key,
     this.initialSelectedDate,
-    @required this.onDateChanged,
-    @required this.onTimeChanged,
+    this.onDateChanged,
+    this.onTimeChanged,
     this.startDate,
     this.endDate,
     this.startTime,
@@ -32,11 +32,22 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
     this.is24h = false,
     this.type = DateTimePickerType.Both,
     this.timeOutOfRangeError = 'Out of Range',
-  }) : super(key: key);
+  })  : assert(type != null),
+        super(key: key);
 
   @override
   Widget builder(
       BuildContext context, DateTimePickerViewModel model, Widget child) {
+    if (type == DateTimePickerType.Both &&
+        (onDateChanged == null || onTimeChanged == null)) {
+      throw 'Ensure both onDateChanged and onTimeChanged are not null when type is DateTimePickerType.Both';
+    }
+    if (type == DateTimePickerType.Date && onDateChanged == null)
+      throw 'Ensure onDateChanged is not null when type is DateTimePickerType.Date';
+
+    if (type == DateTimePickerType.Time && onTimeChanged == null)
+      throw 'Ensure onTimeChanged is not null when type is DateTimePickerType.Time';
+
     try {
       ScreenUtil();
     } catch (e) {
