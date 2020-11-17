@@ -3,6 +3,7 @@ import 'package:date_time_picker_widget/src/date_time_picker_type.dart';
 import 'package:date_time_picker_widget/src/date_time_picker_view_model.dart';
 import 'package:date_time_picker_widget/src/time/time_picker_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stacked/stacked.dart';
 
 class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
@@ -36,6 +37,13 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
   @override
   Widget builder(
       BuildContext context, DateTimePickerViewModel model, Widget child) {
+    try {
+      ScreenUtil();
+    } catch (e) {
+      //iPhoneXR Scree Size
+      ScreenUtil.init(context,
+          designSize: Size(414, 896), allowFontScaling: true);
+    }
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
