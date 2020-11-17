@@ -187,7 +187,7 @@ class DateTimePickerViewModel extends BaseViewModel {
 
       if (date.difference(_currentDateTime).inDays == 0) {
         dateIndex = i;
-        print('dateIndex => $dateIndex');
+        // print('dateIndex => $dateIndex');
       }
 
       if (i + 1 == numberOfDays) {
@@ -249,7 +249,7 @@ class DateTimePickerViewModel extends BaseViewModel {
   }
 
   DateTime _findDate(int dateIndex) {
-    print('_findDate => $dateIndex');
+    // print('_findDate => $dateIndex');
     if (dateSlots != null && dateSlots.isNotEmpty) {
       var w = dateSlots
           .where((e) =>
