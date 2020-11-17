@@ -18,7 +18,10 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
   final bool is24h;
   final DateTimePickerType type;
   final String timeOutOfRangeError;
+  final String datePickerTitle;
+  final String timePickerTitle;
 
+  /// Constructs a DateTimePicker
   const DateTimePicker({
     Key key,
     this.initialSelectedDate,
@@ -32,6 +35,8 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
     this.is24h = false,
     this.type = DateTimePickerType.Both,
     this.timeOutOfRangeError = 'Out of Range',
+    this.datePickerTitle = 'Pick a Date',
+    this.timePickerTitle = 'Pick a Time',
   })  : assert(type != null),
         super(key: key);
 
@@ -55,20 +60,24 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
       ScreenUtil.init(context,
           designSize: Size(414, 896), allowFontScaling: true);
     }
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (type == DateTimePickerType.Both ||
-              type == DateTimePickerType.Date)
-            DatePickerView(),
-          if (type == DateTimePickerType.Both) SizedBox(height: 16.0),
-          if (type == DateTimePickerType.Both ||
-              type == DateTimePickerType.Time)
-            TimePickerView(),
-        ],
-      ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (type == DateTimePickerType.Both ||
+                  type == DateTimePickerType.Date)
+                DatePickerView(constraints: constraints),
+              if (type == DateTimePickerType.Both) SizedBox(height: 16.0),
+              if (type == DateTimePickerType.Both ||
+                  type == DateTimePickerType.Time)
+                TimePickerView(),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -86,6 +95,8 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
         is24h,
         type,
         timeOutOfRangeError,
+        datePickerTitle,
+        timePickerTitle,
       );
 
   @override

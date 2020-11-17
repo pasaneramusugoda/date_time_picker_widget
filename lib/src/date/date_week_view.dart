@@ -5,9 +5,13 @@ import 'package:flutter_screenutil/size_extension.dart';
 import 'package:stacked/stacked.dart';
 
 class DateWeekView extends ViewModelWidget<DateTimePickerViewModel> {
+  final BoxConstraints constraints;
+
+  DateWeekView(this.constraints);
+
   @override
   Widget build(BuildContext context, DateTimePickerViewModel model) {
-    var w = ((ScreenUtil().screenWidth - 20.w) - (32.w * 7)) / 7;
+    var w = ((constraints.biggest.width - 20.w) - (32.w * 7)) / 7;
     w = (w + w / 7).roundToDouble() + 0.3.w;
     return Container(
       height: 53.0.h,
@@ -43,8 +47,8 @@ class DateWeekView extends ViewModelWidget<DateTimePickerViewModel> {
                           ),
                           color: e.enabled
                               ? e.index == model.selectedDateIndex
-                                  ? Theme.of(context).accentColor
-                                  : Colors.white
+                              ? Theme.of(context).accentColor
+                              : Colors.white
                               : Colors.grey.shade300,
                         ),
                         alignment: Alignment.center,

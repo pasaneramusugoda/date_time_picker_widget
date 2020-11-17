@@ -6,7 +6,9 @@ import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 
 class DatePickerView extends ViewModelWidget<DateTimePickerViewModel> {
-  const DatePickerView({Key key}) : super(key: key);
+  final BoxConstraints constraints;
+
+  const DatePickerView({Key key, @required this.constraints}) : super(key: key);
 
   @override
   Widget build(BuildContext context, DateTimePickerViewModel model) {
@@ -21,7 +23,7 @@ class DatePickerView extends ViewModelWidget<DateTimePickerViewModel> {
                 bottom: 16.0,
               ),
               child: Text(
-                'Pick a Date',
+                '${model.datePickerTitle}',
                 style: TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.w600,
@@ -66,7 +68,7 @@ class DatePickerView extends ViewModelWidget<DateTimePickerViewModel> {
           ],
         ),
         DateWeekdaysView(),
-        DateWeekView(),
+        DateWeekView(constraints),
       ],
     );
   }

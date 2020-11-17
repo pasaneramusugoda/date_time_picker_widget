@@ -23,6 +23,8 @@ class DateTimePickerViewModel extends BaseViewModel {
   final bool is24h;
   final DateTimePickerType type;
   final String timeOutOfRangeError;
+  final String datePickerTitle;
+  final String timePickerTitle;
   final List<Map<String, dynamic>> weekdays = [
     {'value': DateTime.sunday, 'text': 'S'},
     {'value': DateTime.monday, 'text': 'M'},
@@ -33,8 +35,7 @@ class DateTimePickerViewModel extends BaseViewModel {
     {'value': DateTime.saturday, 'text': 'S'},
   ];
 
-  DateTimePickerViewModel(
-      this.initialSelectedDate,
+  DateTimePickerViewModel(this.initialSelectedDate,
       this.onDateChanged,
       this.onTimeChanged,
       this.startDate,
@@ -44,7 +45,9 @@ class DateTimePickerViewModel extends BaseViewModel {
       this.timeInterval,
       this.is24h,
       this.type,
-      this.timeOutOfRangeError) {
+      this.timeOutOfRangeError,
+      this.datePickerTitle,
+      this.timePickerTitle) {
     _startDate = startDate;
     _startTime = startTime;
     _endDate = endDate;

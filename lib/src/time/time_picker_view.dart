@@ -17,7 +17,7 @@ class TimePickerView extends ViewModelWidget<DateTimePickerViewModel> {
         Padding(
           padding: const EdgeInsets.only(left: 16.0, top: 16.0, bottom: 16.0),
           child: Text(
-            'Pick a Time',
+            '${model.timePickerTitle}',
             style: TextStyle(
               fontSize: 18.0.sp,
               fontWeight: FontWeight.w600,
