@@ -387,19 +387,27 @@ class DateTimePickerViewModel extends BaseViewModel {
   }
 
   void onClickNext() {
-    if (numberOfDays < selectedDateIndex + 30)
+    var dt = Jiffy(selectedDate).add(months: 1);
+    var diff = Jiffy(dt).diff(selectedDate, Units.DAY);
+
+    if (numberOfDays < selectedDateIndex + diff)
       selectedDateIndex = numberOfDays - 1;
     else
-      selectedDateIndex += 30;
+      selectedDateIndex += diff;
+
     dateScrollController.animateToPage(_findWeekIndex(selectedDateIndex),
         duration: Duration(seconds: 1), curve: Curves.linearToEaseOut);
   }
 
   void onClickPrevious() {
-    if (selectedDateIndex < 30)
+    var dt = Jiffy(selectedDate).subtract(months: 1);
+    var diff = Jiffy(selectedDate).diff(dt, Units.DAY);
+
+    if (selectedDateIndex < diff)
       selectedDateIndex = 0;
     else
-      selectedDateIndex -= 30;
+      selectedDateIndex -= diff;
+
     dateScrollController.animateToPage(_findWeekIndex(selectedDateIndex),
         duration: Duration(seconds: 1), curve: Curves.linearToEaseOut);
   }
