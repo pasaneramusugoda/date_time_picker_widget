@@ -15,7 +15,6 @@ class DateWeekdaysView extends ViewModelWidget<DateTimePickerViewModel> {
           children: model.weekdays
               .map((e) => Container(
                     width: 32.0.w,
-                    // color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
                     child: Text(
                       '${e['text']}',
                       style: TextStyle(
