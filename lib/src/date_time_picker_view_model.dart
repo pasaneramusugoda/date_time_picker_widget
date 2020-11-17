@@ -174,7 +174,7 @@ class DateTimePickerViewModel extends BaseViewModel {
         week = Week(number: w, days: _fillWeek(date, toStart: true));
 
         dateSlots.add(week);
-      } else if (week.number != w) {
+      } else if (week.number != w && week.days.length == 7) {
         week = Week(number: w, days: []);
 
         dateSlots.add(week);
