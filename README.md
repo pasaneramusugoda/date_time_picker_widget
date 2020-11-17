@@ -63,6 +63,9 @@ DateTimePicker(
   },
 )
 ```
+## Demo
+
+[![Demo](https://img.youtube.com/vi/aavR1aabCqw/0.jpg)](https://www.youtube.com/watch?v=aavR1aabCqw)
 
 ## Screen Shot
 ![Screenshot](screenshot.png)
