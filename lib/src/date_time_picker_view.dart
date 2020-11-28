@@ -60,8 +60,8 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
 
     if (initialSelectedDate != null &&
         endDate != null &&
-        !initialSelectedDate.isAfter(endDate))
-      throw 'initialSelectedDate must be a date after endDate';
+        !initialSelectedDate.isBefore(endDate))
+      throw 'initialSelectedDate must be a date before endDate';
 
     if (startDate != null && endDate != null && !endDate.isAfter(startDate))
       throw 'endDate must be a date after startDate';
