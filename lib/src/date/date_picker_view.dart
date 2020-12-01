@@ -11,56 +11,57 @@ class DatePickerView extends ViewModelWidget<DateTimePickerViewModel> {
   const DatePickerView({Key key, @required this.constraints}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, DateTimePickerViewModel model) {
+  Widget build(BuildContext context, DateTimePickerViewModel viewModel) {
     return Column(
       children: [
         Row(
           children: [
             Padding(
               padding: const EdgeInsets.only(
-                left: 16.0,
-                top: 16.0,
-                bottom: 16.0,
+                left: 16,
+                top: 16,
+                bottom: 16,
               ),
               child: Text(
-                '${model.datePickerTitle}',
-                style: TextStyle(
-                  fontSize: 18.0,
+                '${viewModel.datePickerTitle}',
+                style: const TextStyle(
+                  fontSize: 18,
                   fontWeight: FontWeight.w600,
                 ),
               ),
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(right: 8.0),
+                padding: const EdgeInsets.only(right: 8),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.end,
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.navigate_before,
                           color: Colors.black,
                         ),
-                        onPressed: model.onClickPrevious),
+                        onPressed: viewModel.onClickPrevious),
                     Text(
-                      model.selectedDate != null
-                          ? '${DateFormat('MMMM yyyy').format(model.selectedDate)}'
+                      viewModel.selectedDate != null
+                          // ignore: lines_longer_than_80_chars
+                          ? '${DateFormat('MMMM yyyy').format(viewModel.selectedDate)}'
                           : '',
-                      style: TextStyle(
-                        fontSize: 14.0,
+                      style: const TextStyle(
+                        fontSize: 14,
                         color: Colors.grey,
                         fontWeight: FontWeight.w600,
                       ),
                       textAlign: TextAlign.center,
                     ),
                     IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.navigate_next,
                           color: Colors.black,
                         ),
-                        onPressed: model.onClickNext),
+                        onPressed: viewModel.onClickNext),
                   ],
                 ),
               ),

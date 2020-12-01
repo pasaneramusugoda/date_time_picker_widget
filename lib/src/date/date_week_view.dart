@@ -7,18 +7,18 @@ import 'package:stacked/stacked.dart';
 class DateWeekView extends ViewModelWidget<DateTimePickerViewModel> {
   final BoxConstraints constraints;
 
-  DateWeekView(this.constraints);
+  const DateWeekView(this.constraints);
 
   @override
-  Widget build(BuildContext context, DateTimePickerViewModel model) {
+  Widget build(BuildContext context, DateTimePickerViewModel viewModel) {
     var w = ((constraints.biggest.width - 20.w) - (32.w * 7)) / 7;
     w = (w + w / 7).roundToDouble() + 0.3.w;
     return Container(
       height: 53.0.h,
       child: PageView.builder(
-        controller: model.dateScrollController,
-        itemCount: model?.dateSlots?.length ?? 0,
-        itemBuilder: (BuildContext context, int index) {
+        controller: viewModel.dateScrollController,
+        itemCount: viewModel?.dateSlots?.length ?? 0,
+        itemBuilder: (context, index) {
           return Container(
             padding: EdgeInsets.symmetric(horizontal: 10.0.w),
             child: Container(
@@ -27,39 +27,39 @@ class DateWeekView extends ViewModelWidget<DateTimePickerViewModel> {
                   return SizedBox(width: w);
                 },
                 scrollDirection: Axis.horizontal,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: model.dateSlots[index].days.length,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: viewModel.dateSlots[index].days.length,
                 itemBuilder: (context, i) {
-                  var e = model.dateSlots[index].days[i];
+                  final e = viewModel.dateSlots[index].days[i];
 
                   return Center(
                     child: InkWell(
                       onTap: !e.enabled
                           ? null
-                          : () => model.onTapDate(index, e.index),
+                          : () => viewModel.selectedDateIndex = e.index,
                       child: Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(90.0),
+                          borderRadius: BorderRadius.circular(90),
                           border: Border.all(
-                            color: e.index == model.selectedDateIndex
+                            color: e.index == viewModel.selectedDateIndex
                                 ? Theme.of(context).accentColor
                                 : Colors.grey,
                           ),
                           color: e.enabled
-                              ? e.index == model.selectedDateIndex
-                              ? Theme.of(context).accentColor
-                              : Colors.white
+                              ? e.index == viewModel.selectedDateIndex
+                                  ? Theme.of(context).accentColor
+                                  : Colors.white
                               : Colors.grey.shade300,
                         ),
                         alignment: Alignment.center,
-                        width: 32.0.w,
-                        height: 32.0.w,
+                        width: 32.w,
+                        height: 32.w,
                         child: Text(
                           '${e.date.day}',
                           style: TextStyle(
-                              fontSize: 14.0.ssp,
+                              fontSize: 14.ssp,
                               fontWeight: FontWeight.w500,
-                              color: e.index == model.selectedDateIndex
+                              color: e.index == viewModel.selectedDateIndex
                                   ? Colors.white
                                   : Colors.grey),
                           textAlign: TextAlign.center,

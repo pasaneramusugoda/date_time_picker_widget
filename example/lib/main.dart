@@ -25,13 +25,13 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.blue,
         accentColor: Colors.blue,
       ),
-      home: MyHomePage(title: 'Date Time Picker Demo'),
+      home: const MyHomePage(title: 'Date Time Picker Demo'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  const MyHomePage({Key key, this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -67,29 +67,29 @@ class _MyHomePageState extends State<MyHomePage> {
         body: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(height: 24.0),
+                  const SizedBox(height: 24),
                   Text(
                     'Color Pallet',
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headline6,
                   ),
-                  SizedBox(height: 24.0),
+                  const SizedBox(height: 24),
                   _colorPallet(),
-                  SizedBox(height: 24.0),
-                  Divider(),
-                  SizedBox(height: 24.0),
+                  const SizedBox(height: 24),
+                  const Divider(),
+                  const SizedBox(height: 24),
                   _dateTimePicker(),
-                  SizedBox(height: 24.0),
-                  Divider(),
-                  SizedBox(height: 24.0),
+                  const SizedBox(height: 24),
+                  const Divider(),
+                  const SizedBox(height: 24),
                   _datePicker(),
-                  SizedBox(height: 24.0),
-                  Divider(),
-                  SizedBox(height: 24.0),
+                  const SizedBox(height: 24),
+                  const Divider(),
+                  const SizedBox(height: 24),
                   _timePicker(),
                 ],
               ),
@@ -100,8 +100,8 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  _dateTimePicker() {
-    var dt = DateTime.now();
+  Widget _dateTimePicker() {
+    final dt = DateTime.now();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -110,20 +110,20 @@ class _MyHomePageState extends State<MyHomePage> {
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.headline6,
         ),
-        SizedBox(height: 8.0),
+        const SizedBox(height: 8),
         Text(
           'Date: $_d1  Time: $_t1',
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.bodyText2,
         ),
-        SizedBox(height: 16.0),
+        const SizedBox(height: 16),
         DateTimePicker(
           initialSelectedDate: dt,
-          startDate: dt.add(Duration(days: 1)),
-          endDate: dt.add(Duration(days: 60)),
+          startDate: dt.add(const Duration(days: 1)),
+          endDate: dt.add(const Duration(days: 60)),
           startTime: DateTime(dt.year, dt.month, dt.day, 6),
           endTime: DateTime(dt.year, dt.month, dt.day, 18),
-          timeInterval: Duration(minutes: 15),
+          timeInterval: const Duration(minutes: 15),
           datePickerTitle: 'Pick your preferred date',
           timePickerTitle: 'Pick your preferred time',
           timeOutOfRangeError: 'Sorry shop is closed now',
@@ -143,22 +143,28 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  _datePicker() {
+  Widget _datePicker() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           'Date Picker',
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.headline6,
+          style: Theme
+              .of(context)
+              .textTheme
+              .headline6,
         ),
-        SizedBox(height: 8.0),
+        const SizedBox(height: 8),
         Text(
           'Date: $_d2',
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.bodyText2,
+          style: Theme
+              .of(context)
+              .textTheme
+              .bodyText2,
         ),
-        SizedBox(height: 16.0),
+        const SizedBox(height: 16),
         DateTimePicker(
           type: DateTimePickerType.Date,
           onDateChanged: (date) {
@@ -171,25 +177,31 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  _timePicker() {
+  Widget _timePicker() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           'Time Picker',
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.headline6,
+          style: Theme
+              .of(context)
+              .textTheme
+              .headline6,
         ),
-        SizedBox(height: 8.0),
+        const SizedBox(height: 8),
         Text(
           'Time: $_t2',
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.bodyText2,
+          style: Theme
+              .of(context)
+              .textTheme
+              .bodyText2,
         ),
-        SizedBox(height: 16.0),
+        const SizedBox(height: 16),
         DateTimePicker(
           type: DateTimePickerType.Time,
-          timeInterval: Duration(minutes: 30),
+          timeInterval: const Duration(minutes: 30),
           onTimeChanged: (time) {
             setState(() {
               _t2 = DateFormat('hh:mm:ss aa').format(time);
@@ -200,7 +212,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  _colorPallet() {
+  Widget _colorPallet() {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -212,8 +224,8 @@ class _MyHomePageState extends State<MyHomePage> {
             });
           },
           child: Container(
-            width: 24.0,
-            height: 24.0,
+            width: 24,
+            height: 24,
             color: Colors.amber,
           ),
         ),
@@ -224,8 +236,8 @@ class _MyHomePageState extends State<MyHomePage> {
             });
           },
           child: Container(
-            width: 24.0,
-            height: 24.0,
+            width: 24,
+            height: 24,
             color: Colors.green,
           ),
         ),
@@ -236,8 +248,8 @@ class _MyHomePageState extends State<MyHomePage> {
             });
           },
           child: Container(
-            width: 24.0,
-            height: 24.0,
+            width: 24,
+            height: 24,
             color: Colors.blue,
           ),
         ),
@@ -248,8 +260,8 @@ class _MyHomePageState extends State<MyHomePage> {
             });
           },
           child: Container(
-            width: 24.0,
-            height: 24.0,
+            width: 24,
+            height: 24,
             color: Colors.deepPurple,
           ),
         ),

@@ -9,15 +9,15 @@ class TimePickerView extends ViewModelWidget<DateTimePickerViewModel> {
   const TimePickerView({Key key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, DateTimePickerViewModel model) {
+  Widget build(BuildContext context, DateTimePickerViewModel viewModel) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 16.0, top: 16.0, bottom: 16.0),
+          padding: const EdgeInsets.only(left: 16, top: 16, bottom: 16),
           child: Text(
-            '${model.timePickerTitle}',
+            '${viewModel.timePickerTitle}',
             style: TextStyle(
               fontSize: 18.0.sp,
               fontWeight: FontWeight.w600,
@@ -27,40 +27,42 @@ class TimePickerView extends ViewModelWidget<DateTimePickerViewModel> {
         Container(
           height: 45.0.h,
           alignment: Alignment.center,
-          child: model.timeSlots == null
+          child: viewModel.timeSlots == null
               ? Text(
-                  model.timeOutOfRangeError,
-                  style: TextStyle(color: Colors.black87),
+                  viewModel.timeOutOfRangeError,
+                  style: const TextStyle(color: Colors.black87),
                 )
               : ScrollablePositionedList.builder(
-                  itemScrollController: model.timeScrollController,
-                  itemPositionsListener: model.timePositionsListener,
+                  itemScrollController: viewModel.timeScrollController,
+                  itemPositionsListener: viewModel.timePositionsListener,
                   scrollDirection: Axis.horizontal,
-                  itemCount: model.timeSlots.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    var date = model.timeSlots[index];
+                  itemCount: viewModel.timeSlots.length,
+                  itemBuilder: (context, index) {
+                    final date = viewModel.timeSlots[index];
                     return InkWell(
-                      onTap: () => model.onTapTime(index),
+                      onTap: () => viewModel.selectedTimeIndex = index,
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 8.0.w),
                         margin: EdgeInsets.all(4.w),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
+                          borderRadius: BorderRadius.circular(8),
                           border: Border.all(
-                            color: index == model.selectedTimeIndex
+                            color: index == viewModel.selectedTimeIndex
                                 ? Theme.of(context).accentColor
                                 : Colors.grey,
                           ),
-                          color: index == model.selectedTimeIndex
+                          color: index == viewModel.selectedTimeIndex
                               ? Theme.of(context).accentColor
                               : Colors.white,
                         ),
                         alignment: Alignment.center,
                         child: Text(
-                          '${DateFormat(model.is24h ? 'HH:mm' : 'hh:mm aa').format(date)}',
+                          // ignore: lines_longer_than_80_chars
+                          '${DateFormat(viewModel.is24h ? 'HH:mm' : 'hh:mm aa')
+                              .format(date)}',
                           style: TextStyle(
                               fontSize: 14.0.sp,
-                              color: index == model.selectedTimeIndex
+                              color: index == viewModel.selectedTimeIndex
                                   ? Colors.white
                                   : Colors.grey),
                           textAlign: TextAlign.center,
