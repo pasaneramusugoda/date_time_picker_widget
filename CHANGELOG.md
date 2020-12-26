@@ -1,3 +1,7 @@
+## [0.1.1+1] - 2020/12/26.
+
+* Library updates
+
 ## [0.1.1] - 2020/12/01.
 
 * A bug fix with dart analysis options
