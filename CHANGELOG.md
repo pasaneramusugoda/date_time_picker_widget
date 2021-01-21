@@ -1,3 +1,7 @@
+## [0.1.1+2] - 2021/01/21.
+
+* A ui bug fix and library update
+
 ## [0.1.1+1] - 2020/12/26.
 
 * Library updates
