@@ -1,7 +1,5 @@
 import 'package:date_time_picker_widget/src/date_time_picker_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_screenutil/size_extension.dart';
 import 'package:stacked/stacked.dart';
 
 class DateWeekView extends ViewModelWidget<DateTimePickerViewModel> {
@@ -11,8 +9,8 @@ class DateWeekView extends ViewModelWidget<DateTimePickerViewModel> {
 
   @override
   Widget build(BuildContext context, DateTimePickerViewModel viewModel) {
-    var w = ((constraints.biggest.width - 20.w) - (32.w * 7)) / 7;
-    w = (w + w / 7).roundToDouble() + 0.3.w;
+    var w = ((constraints.biggest.width - 20) - (32 * 7)) / 7;
+    w = (w + w / 7).roundToDouble() + 0.3;
     return Container(
       height: 53.0.h,
       child: PageView.builder(

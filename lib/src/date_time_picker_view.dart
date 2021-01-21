@@ -3,7 +3,6 @@ import 'package:date_time_picker_widget/src/date_time_picker_type.dart';
 import 'package:date_time_picker_widget/src/date_time_picker_view_model.dart';
 import 'package:date_time_picker_widget/src/time/time_picker_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stacked/stacked.dart';
 
 class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
@@ -80,28 +79,24 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
       throw Exception('endTime must be a time after startTime');
     }
 
-    return ScreenUtilInit(
-      designSize: const Size(414, 896),
-      allowFontScaling: true,
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          return Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (type == DateTimePickerType.Both ||
-                    type == DateTimePickerType.Date)
-                  DatePickerView(constraints: constraints),
-                if (type == DateTimePickerType.Both) const SizedBox(height: 16),
-                if (type == DateTimePickerType.Both ||
-                    type == DateTimePickerType.Time)
-                  const TimePickerView(),
-              ],
-            ),
-          );
-        },
-      ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (type == DateTimePickerType.Both ||
+                  type == DateTimePickerType.Date)
+                DatePickerView(constraints: constraints),
+              if (type == DateTimePickerType.Both) const SizedBox(height: 16),
+              if (type == DateTimePickerType.Both ||
+                  type == DateTimePickerType.Time)
+                const TimePickerView(),
+            ],
+          ),
+        );
+      },
     );
   }
 
