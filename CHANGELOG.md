@@ -1,3 +1,7 @@
+## [1.0.0+3] - 2021/08/07.
+
+* Upgrade to null safety
+
 ## [0.1.1+2] - 2021/01/21.
 
 * A ui bug fix and library update

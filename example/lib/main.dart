@@ -119,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
         const SizedBox(height: 16),
         DateTimePicker(
           initialSelectedDate: dt,
-          startDate: dt.add(const Duration(days: 1)),
+          startDate: dt.subtract(const Duration(days: 1)),
           endDate: dt.add(const Duration(days: 60)),
           startTime: DateTime(dt.year, dt.month, dt.day, 6),
           endTime: DateTime(dt.year, dt.month, dt.day, 18),
@@ -128,6 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
           timePickerTitle: 'Pick your preferred time',
           timeOutOfRangeError: 'Sorry shop is closed now',
           is24h: false,
+          numberOfWeeksToDisplay: 4,
           onDateChanged: (date) {
             setState(() {
               _d1 = DateFormat('dd MMM, yyyy').format(date);
@@ -150,19 +151,13 @@ class _MyHomePageState extends State<MyHomePage> {
         Text(
           'Date Picker',
           textAlign: TextAlign.center,
-          style: Theme
-              .of(context)
-              .textTheme
-              .headline6,
+          style: Theme.of(context).textTheme.headline6,
         ),
         const SizedBox(height: 8),
         Text(
           'Date: $_d2',
           textAlign: TextAlign.center,
-          style: Theme
-              .of(context)
-              .textTheme
-              .bodyText2,
+          style: Theme.of(context).textTheme.bodyText2,
         ),
         const SizedBox(height: 16),
         DateTimePicker(
@@ -184,19 +179,13 @@ class _MyHomePageState extends State<MyHomePage> {
         Text(
           'Time Picker',
           textAlign: TextAlign.center,
-          style: Theme
-              .of(context)
-              .textTheme
-              .headline6,
+          style: Theme.of(context).textTheme.headline6,
         ),
         const SizedBox(height: 8),
         Text(
           'Time: $_t2',
           textAlign: TextAlign.center,
-          style: Theme
-              .of(context)
-              .textTheme
-              .bodyText2,
+          style: Theme.of(context).textTheme.bodyText2,
         ),
         const SizedBox(height: 16),
         DateTimePicker(

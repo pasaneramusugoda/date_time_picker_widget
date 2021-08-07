@@ -42,7 +42,7 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
 
   @override
   Widget builder(
-      BuildContext context, DateTimePickerViewModel model, Widget child) {
+      BuildContext context, DateTimePickerViewModel model, Widget? child) {
     if (type == DateTimePickerType.Both &&
         (onDateChanged == null || onTimeChanged == null)) {
       throw Exception('Ensure both onDateChanged and onTimeChanged are not null'

@@ -1,9 +1,7 @@
-import 'package:flutter/foundation.dart';
-
 class Date {
   final int index;
   bool enabled;
-  DateTime date;
+  DateTime? date;
 
-  Date({@required this.index, this.enabled = true, this.date});
+  Date({required this.index, this.enabled = true, this.date});
 }

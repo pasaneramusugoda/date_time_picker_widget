@@ -15,60 +15,70 @@ class DateWeekView extends ViewModelWidget<DateTimePickerViewModel> {
       height: 53.0.h,
       child: PageView.builder(
         controller: viewModel.dateScrollController,
-        itemCount: viewModel?.dateSlots?.length ?? 0,
+        itemCount: ((viewModel.dateSlots?.length ?? 0) /
+                viewModel.numberOfWeeksToDisplay)
+            .round(),
         itemBuilder: (context, index) {
-          return Container(
-            padding: EdgeInsets.symmetric(horizontal: 10.0.w),
-            child: Container(
-              child: ListView.separated(
-                separatorBuilder: (context, index) {
-                  return SizedBox(width: w);
-                },
-                scrollDirection: Axis.horizontal,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: viewModel.dateSlots[index].days.length,
-                itemBuilder: (context, i) {
-                  final e = viewModel.dateSlots[index].days[i];
+          return ListView.builder(
+              itemBuilder: (context, wIndex) {
+                // ignore: lines_longer_than_80_chars
+                print(
+                    '$wIndex + $index * ${viewModel.numberOfWeeksToDisplay} = ${wIndex + (index * viewModel.numberOfWeeksToDisplay)}');
+                print('${viewModel.dateSlots?.length}');
+                return Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  height: 53,
+                  child: ListView.separated(
+                    separatorBuilder: (context, index) {
+                      return SizedBox(width: w);
+                    },
+                    scrollDirection: Axis.horizontal,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount:
+                        viewModel.dateSlots![wIndex + index]!.days!.length,
+                    itemBuilder: (context, i) {
+                      final e = viewModel.dateSlots![wIndex + index]!.days![i];
 
-                  return Center(
-                    child: InkWell(
-                      onTap: !e.enabled
-                          ? null
-                          : () => viewModel.selectedDateIndex = e.index,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(90),
-                          border: Border.all(
-                            color: e.index == viewModel.selectedDateIndex
-                                ? Theme.of(context).accentColor
-                                : Colors.grey,
+                      return Center(
+                        child: InkWell(
+                          onTap: !e.enabled
+                              ? null
+                              : () => viewModel.selectedDateIndex = e.index,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(90),
+                              border: Border.all(
+                                color: e.index == viewModel.selectedDateIndex
+                                    ? Theme.of(context).accentColor
+                                    : Colors.grey,
+                              ),
+                              color: e.enabled
+                                  ? e.index == viewModel.selectedDateIndex
+                                      ? Theme.of(context).accentColor
+                                      : Colors.white
+                                  : Colors.grey.shade300,
+                            ),
+                            alignment: Alignment.center,
+                            width: 32,
+                            height: 32,
+                            child: Text(
+                              '${e.date!.day}',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: e.index == viewModel.selectedDateIndex
+                                      ? Colors.white
+                                      : Colors.grey),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
-                          color: e.enabled
-                              ? e.index == viewModel.selectedDateIndex
-                                  ? Theme.of(context).accentColor
-                                  : Colors.white
-                              : Colors.grey.shade300,
                         ),
-                        alignment: Alignment.center,
-                        width: 32.w,
-                        height: 32.w,
-                        child: Text(
-                          '${e.date.day}',
-                          style: TextStyle(
-                              fontSize: 14.ssp,
-                              fontWeight: FontWeight.w500,
-                              color: e.index == viewModel.selectedDateIndex
-                                  ? Colors.white
-                                  : Colors.grey),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          );
+                      );
+                    },
+                  ),
+                );
+              },
+              itemCount: viewModel.numberOfWeeksToDisplay);
         },
       ),
     );

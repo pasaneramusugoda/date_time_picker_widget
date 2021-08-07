@@ -5,7 +5,7 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:stacked/stacked.dart';
 
 class TimePickerView extends ViewModelWidget<DateTimePickerViewModel> {
-  const TimePickerView({Key key}) : super(key: key);
+  const TimePickerView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, DateTimePickerViewModel viewModel) {
@@ -32,12 +32,12 @@ class TimePickerView extends ViewModelWidget<DateTimePickerViewModel> {
                   style: const TextStyle(color: Colors.black87),
                 )
               : ScrollablePositionedList.builder(
-                  itemScrollController: viewModel.timeScrollController,
+            itemScrollController: viewModel.timeScrollController,
                   itemPositionsListener: viewModel.timePositionsListener,
                   scrollDirection: Axis.horizontal,
-                  itemCount: viewModel.timeSlots.length,
+                  itemCount: viewModel.timeSlots!.length,
                   itemBuilder: (context, index) {
-                    final date = viewModel.timeSlots[index];
+                    final date = viewModel.timeSlots![index];
                     return InkWell(
                       onTap: () => viewModel.selectedTimeIndex = index,
                       child: Container(
@@ -47,8 +47,7 @@ class TimePickerView extends ViewModelWidget<DateTimePickerViewModel> {
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(
                             color: index == viewModel.selectedTimeIndex
-                                ? Theme
-                                .of(context)
+                                ? Theme.of(context)
                                 .accentColor
                                 : Colors.grey,
                           ),
