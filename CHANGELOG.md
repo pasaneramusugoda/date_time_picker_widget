@@ -1,3 +1,7 @@
+## [1.0.1+4] - 2021/08/07.
+
+* Library updates
+
 ## [1.0.0+3] - 2021/08/07.
 
 * Upgrade to null safety

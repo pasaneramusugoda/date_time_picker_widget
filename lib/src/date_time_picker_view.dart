@@ -37,12 +37,11 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
     this.datePickerTitle = 'Pick a Date',
     this.timePickerTitle = 'Pick a Time',
     this.numberOfWeeksToDisplay = 1,
-  })  : assert(type != null),
-        super(key: key);
+  }) : super(key: key);
 
   @override
   Widget builder(
-      BuildContext context, DateTimePickerViewModel model, Widget? child) {
+      BuildContext context, DateTimePickerViewModel viewModel, Widget? child) {
     if (type == DateTimePickerType.Both &&
         (onDateChanged == null || onTimeChanged == null)) {
       throw Exception('Ensure both onDateChanged and onTimeChanged are not null'
@@ -119,5 +118,5 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
       );
 
   @override
-  void onViewModelReady(DateTimePickerViewModel model) => model.init();
+  void onViewModelReady(DateTimePickerViewModel viewModel) => viewModel.init();
 }

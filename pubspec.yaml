@@ -1,6 +1,6 @@
 name: date_time_picker_widget
 description: This package brings us a way to pick date and time with fresh new UI design
-version: 1.0.0+3
+version: 1.0.1+4
 homepage: https://github.com/pasaneramusugoda/date_time_picker_widget
 
 environment:
@@ -13,7 +13,7 @@ dependencies:
   intl: ^0.17.0
   stacked: ^2.2.3
   jiffy: ^4.1.0
-  scrollable_positioned_list: ^0.1.10
+  scrollable_positioned_list: ^0.2.0-nullsafety.0
 
 dev_dependencies:
   flutter_test:
