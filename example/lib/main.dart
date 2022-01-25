@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
         body: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding: const EdgeInsets.symmetric(horizontal: 0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -91,12 +91,84 @@ class _MyHomePageState extends State<MyHomePage> {
                   const Divider(),
                   const SizedBox(height: 24),
                   _timePicker(),
+                  const Divider(),
+                  const SizedBox(height: 24),
+                  _newDatetimePicker(),
+
                 ],
               ),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _newDatetimePicker(){
+    final dt = DateTime.now();
+    final dtMin = DateTime.now().add(const Duration(hours: 1, minutes: 0));
+    final dtMax = dtMin.add(const Duration(days: 4,));
+    debugPrint("dt: ${dt.toString()}");
+    debugPrint("dtMin: ${dtMin.toString()}");
+    debugPrint("dtMax: ${dtMax.toString()}");
+
+    return Container(
+      child: DateTimePicker(
+        initialSelectedDate: dtMin,
+        startDate: dtMin,//.subtract(const Duration(days: 1)),
+        endDate: dtMax,
+        startTime: dt,
+        endTime: dtMax,
+        timeInterval: const Duration(minutes: 15),
+        datePickerTitle: 'Pick your preferred date',
+        timePickerTitle: 'Pick your preferred time',
+        timeOutOfRangeError: 'Sorry shop is closed now',
+        is24h: false,
+        numberOfWeeksToDisplay: 1,
+        locale: "es",
+        customStringWeekdays: ["D", "L", "M", "X", "J", "V", "S"],
+        onDateChanged: (date) {
+          setState(() {
+            _d1 = DateFormat('dd MMM, yyyy').format(date);
+          });
+        },
+        onTimeChanged: (time) {
+          setState(() {
+            _t1 = DateFormat('hh:mm:ss aa').format(time);
+          });
+        },
+      )/*DateTimePicker(
+        /*initialSelectedDate: dtMin.add(const Duration(minutes: 5)),
+        startDate: dtMin,
+        endDate: dtMax,
+        startTime: dtMin,
+        endTime: dtMax,//DateTime(dt.year, dt.month, dt.day, 18),
+        timeInterval: interval,*/
+        initialSelectedDate: dt,
+        startDate: dt.subtract(const Duration(days: 1)),
+        endDate: dt.add(const Duration(days: 60)),
+        startTime: DateTime(dt.year, dt.month, dt.day, 6),
+        endTime: DateTime(dt.year, dt.month, dt.day, 18),
+        timeInterval: const Duration(minutes: 15),
+        datePickerTitle: 'Elige la fecha',
+        timePickerTitle: 'Elige la hora',
+        timeOutOfRangeError: 'Fuera del rango',
+        is24h: true,
+        locale: "es",
+        customStringWeekdays: ["D", "L", "M", "X", "J", "V", "S"],
+        onDateChanged: (date) {
+          //setState(() {
+          final _d1 = DateFormat('dd MMM, yyyy').format(date);
+          debugPrint("onDateChanged d1: $_d1");
+          //});
+        },
+        onTimeChanged: (time) {
+          //setState(() {
+          final _t1 = DateFormat('hh:mm:ss aa').format(time);
+          debugPrint("onDateChanged t1: $_t1");
+          //});
+        },
+      ),*/
     );
   }
 

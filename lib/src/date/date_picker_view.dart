@@ -2,16 +2,20 @@ import 'package:date_time_picker_widget/src/date/date_week_view.dart';
 import 'package:date_time_picker_widget/src/date/date_weekdays_view.dart';
 import 'package:date_time_picker_widget/src/date_time_picker_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 
 class DatePickerView extends ViewModelWidget<DateTimePickerViewModel> {
   final BoxConstraints constraints;
+  final String? locale;
 
-  const DatePickerView({Key? key, required this.constraints}) : super(key: key);
+  const DatePickerView({Key? key, required this.constraints, this.locale}) : super(key: key);
 
   @override
   Widget build(BuildContext context, DateTimePickerViewModel viewModel) {
+    initializeDateFormatting(locale);
+
     return Column(
       children: [
         Row(
@@ -50,7 +54,7 @@ class DatePickerView extends ViewModelWidget<DateTimePickerViewModel> {
                   Text(
                     viewModel.selectedDate != null
                         // ignore: lines_longer_than_80_chars
-                        ? '${DateFormat('MMMM yyyy').format(viewModel.selectedDate!)}'
+                        ? '${DateFormat('MMMM yyyy', locale).format(viewModel.selectedDate!)}'
                         : '',
                     style: const TextStyle(
                       fontSize: 14,

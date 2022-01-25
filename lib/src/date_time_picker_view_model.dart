@@ -8,24 +8,28 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:stacked/stacked.dart';
 
 class DateTimePickerViewModel extends BaseViewModel {
-  final DateTime initialSelectedDate;
-  final Function(DateTime date) onDateChanged;
-  final Function(DateTime time) onTimeChanged;
-  final DateTime startDate;
-  final DateTime endDate;
-  final DateTime startTime;
-  final DateTime endTime;
-  DateTime _startDate;
-  DateTime _endDate;
-  DateTime _startTime;
-  DateTime _endTime;
+  final DateTime? initialSelectedDate;
+  final Function(DateTime date)? onDateChanged;
+  final Function(DateTime time)? onTimeChanged;
+  final DateTime? startDate;
+  final DateTime? endDate;
+  final DateTime? startTime;
+  final DateTime? endTime;
+  DateTime? _startDate;
+  DateTime? _endDate;
+  DateTime? _startTime;
+  DateTime? _endTime;
   Duration timeInterval;
+  final List<String>? customStringWeekdays;
+  final int numberOfWeeksToDisplay;
   final bool is24h;
   final DateTimePickerType type;
   final String timeOutOfRangeError;
   final String datePickerTitle;
   final String timePickerTitle;
-  final List<Map<String, dynamic>> weekdays = [
+  final String? locale;
+
+  final List<Map<String, dynamic>> _weekdays = [
     {'value': DateTime.sunday, 'text': 'S'},
     {'value': DateTime.monday, 'text': 'M'},
     {'value': DateTime.tuesday, 'text': 'T'},
@@ -34,6 +38,8 @@ class DateTimePickerViewModel extends BaseViewModel {
     {'value': DateTime.friday, 'text': 'F'},
     {'value': DateTime.saturday, 'text': 'S'},
   ];
+
+  List<Map<String, dynamic>> weekdays = [];
 
   DateTimePickerViewModel(
       this.initialSelectedDate,
@@ -50,11 +56,28 @@ class DateTimePickerViewModel extends BaseViewModel {
       this.timeOutOfRangeError,
       this.datePickerTitle,
       this.timePickerTitle,
-      this.numberOfWeeksToDisplay) {
+      this.customStringWeekdays,
+      this.numberOfWeeksToDisplay,
+      this.locale,
+      ) {
     _startDate = startDate;
     _startTime = startTime;
     _endDate = endDate;
     _endTime = endTime;
+
+    if(customStringWeekdays != null && customStringWeekdays!.length == 7){
+      weekdays = [
+        {'value': DateTime.sunday, 'text': customStringWeekdays![0]},
+        {'value': DateTime.monday, 'text': customStringWeekdays![1]},
+        {'value': DateTime.tuesday, 'text': customStringWeekdays![2]},
+        {'value': DateTime.wednesday, 'text': customStringWeekdays![3]},
+        {'value': DateTime.thursday, 'text': customStringWeekdays![4]},
+        {'value': DateTime.friday, 'text': customStringWeekdays![5]},
+        {'value': DateTime.saturday, 'text': customStringWeekdays![6]},
+      ];
+    }else{
+      weekdays = _weekdays;
+    }
   }
 
   int? _selectedWeekday = 0;
@@ -388,13 +411,13 @@ class DateTimePickerViewModel extends BaseViewModel {
   }
 
   DateTime _getNextTime(int index) {
-    final dt = _startTime.add(
-        Duration(minutes: (60 - _startTime.minute) % timeInterval.inMinutes));
+    final dt = _startTime!.add(
+        Duration(minutes: (60 - _startTime!.minute) % timeInterval.inMinutes));
     return dt.add(Duration(minutes: timeInterval.inMinutes * index));
   }
 
   DateTime getNextDate(int index) {
-    return _startDate.add(Duration(days: index));
+    return _startDate!.add(Duration(days: index));
   }
 
   void onClickNext() {

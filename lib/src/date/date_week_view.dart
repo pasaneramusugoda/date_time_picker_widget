@@ -12,7 +12,7 @@ class DateWeekView extends ViewModelWidget<DateTimePickerViewModel> {
     var w = ((constraints.biggest.width - 20) - (32 * 7)) / 7;
     w = (w + w / 7).roundToDouble() + 0.3;
     return Container(
-      height: 53.0.h,
+      height: 53.0 * viewModel.numberOfWeeksToDisplay,
       child: PageView.builder(
         controller: viewModel.dateScrollController,
         itemCount: ((viewModel.dateSlots?.length ?? 0) /
@@ -20,6 +20,7 @@ class DateWeekView extends ViewModelWidget<DateTimePickerViewModel> {
             .round(),
         itemBuilder: (context, index) {
           return ListView.builder(
+              //physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, wIndex) {
                 print(
                     '$wIndex + $index * ${viewModel.numberOfWeeksToDisplay} = '
