@@ -3,26 +3,30 @@ import 'package:date_time_picker_widget/src/date_time_picker_type.dart';
 import 'package:date_time_picker_widget/src/date_time_picker_view_model.dart';
 import 'package:date_time_picker_widget/src/time/time_picker_view.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:stacked/stacked.dart';
 
 class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
-  final DateTime initialSelectedDate;
-  final Function(DateTime date) onDateChanged;
-  final Function(DateTime time) onTimeChanged;
-  final DateTime startDate;
-  final DateTime endDate;
-  final DateTime startTime;
-  final DateTime endTime;
+  final DateTime? initialSelectedDate;
+  final Function(DateTime date)? onDateChanged;
+  final Function(DateTime time)? onTimeChanged;
+  final DateTime? startDate;
+  final DateTime? endDate;
+  final DateTime? startTime;
+  final DateTime? endTime;
   final Duration timeInterval;
   final bool is24h;
   final DateTimePickerType type;
   final String timeOutOfRangeError;
   final String datePickerTitle;
   final String timePickerTitle;
+  final int numberOfWeeksToDisplay;
+  final List<String>? customStringWeekdays;
+  final String? locale;
 
   /// Constructs a DateTimePicker
   const DateTimePicker({
-    Key key,
+    Key? key,
     this.initialSelectedDate,
     this.onDateChanged,
     this.onTimeChanged,
@@ -37,6 +41,9 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
     this.datePickerTitle = 'Pick a Date',
     this.timePickerTitle = 'Pick a Time',
     this.numberOfWeeksToDisplay = 1,
+    this.customStringWeekdays,
+    this.locale,
+
   }) : super(key: key);
 
   @override
@@ -59,23 +66,26 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
     }
 
     if (initialSelectedDate != null &&
-        startDate != null &&
-        !initialSelectedDate.isAfter(startDate)) {
-      throw Exception('initialSelectedDate must be a date after startDate');
+        startDate != null && !(initialSelectedDate!.isAfter(startDate!) || initialSelectedDate!.isAtSameMomentAs(startDate!))){
+      throw Exception('initialSelectedDate must be a date after or equals startDate');
     }
 
     if (initialSelectedDate != null &&
         endDate != null &&
-        !initialSelectedDate.isBefore(endDate)) {
+        (!initialSelectedDate!.isBefore(endDate!))) {
       throw Exception('initialSelectedDate must be a date before endDate');
     }
 
-    if (startDate != null && endDate != null && !endDate.isAfter(startDate)) {
+    if (startDate != null && endDate != null && !endDate!.isAfter(startDate!)) {
       throw Exception('endDate must be a date after startDate');
     }
 
-    if (startTime != null && endTime != null && !endTime.isAfter(startTime)) {
+    if (startTime != null && endTime != null && !endTime!.isAfter(startTime!)) {
       throw Exception('endTime must be a time after startTime');
+    }
+
+    if (customStringWeekdays != null && customStringWeekdays!.length != 7) {
+      throw Exception('customStringWeekdays must containt 7 items');
     }
 
     return LayoutBuilder(
@@ -87,7 +97,7 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
             children: [
               if (type == DateTimePickerType.Both ||
                   type == DateTimePickerType.Date)
-                DatePickerView(constraints: constraints),
+                DatePickerView(constraints: constraints, locale: locale,),
               if (type == DateTimePickerType.Both) const SizedBox(height: 16),
               if (type == DateTimePickerType.Both ||
                   type == DateTimePickerType.Time)
@@ -115,6 +125,9 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
         timeOutOfRangeError,
         datePickerTitle,
         timePickerTitle,
+        customStringWeekdays,
+        numberOfWeeksToDisplay,
+        locale,
       );
 
   @override
