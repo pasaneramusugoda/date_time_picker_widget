@@ -3,10 +3,9 @@ import 'package:date_time_picker_widget/src/date_time_picker_type.dart';
 import 'package:date_time_picker_widget/src/date_time_picker_view_model.dart';
 import 'package:date_time_picker_widget/src/time/time_picker_view.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:stacked/stacked.dart';
 
-class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
+class DateTimePicker extends StackedView<DateTimePickerViewModel> {
   final DateTime? initialSelectedDate;
   final Function(DateTime date)? onDateChanged;
   final Function(DateTime time)? onTimeChanged;
@@ -66,8 +65,11 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
     }
 
     if (initialSelectedDate != null &&
-        startDate != null && !(initialSelectedDate!.isAfter(startDate!) || initialSelectedDate!.isAtSameMomentAs(startDate!))){
-      throw Exception('initialSelectedDate must be a date after or equals startDate');
+        startDate != null &&
+        !(initialSelectedDate!.isAfter(startDate!) ||
+            initialSelectedDate!.isAtSameMomentAs(startDate!))) {
+      throw Exception(
+          'initialSelectedDate must be a date after or equals startDate');
     }
 
     if (initialSelectedDate != null &&

@@ -10,7 +10,7 @@ class DatePickerView extends ViewModelWidget<DateTimePickerViewModel> {
   final BoxConstraints constraints;
   final String? locale;
 
-  const DatePickerView({Key? key, required this.constraints, this.locale}) : super(key: key);
+  const DatePickerView({super.key, required this.constraints, this.locale});
 
   @override
   Widget build(BuildContext context, DateTimePickerViewModel viewModel) {

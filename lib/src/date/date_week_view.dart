@@ -50,12 +50,12 @@ class DateWeekView extends ViewModelWidget<DateTimePickerViewModel> {
                               borderRadius: BorderRadius.circular(90),
                               border: Border.all(
                                 color: e.index == viewModel.selectedDateIndex
-                                    ? Theme.of(context).accentColor
+                                    ? Theme.of(context).colorScheme.secondary
                                     : Colors.grey,
                               ),
                               color: e.enabled
                                   ? e.index == viewModel.selectedDateIndex
-                                      ? Theme.of(context).accentColor
+                                      ? Theme.of(context).colorScheme.secondary
                                       : Colors.white
                                   : Colors.grey.shade300,
                             ),

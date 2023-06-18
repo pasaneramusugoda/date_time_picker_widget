@@ -1,7 +1,6 @@
 import 'package:date_time_picker_widget/src/date.dart';
 import 'package:date_time_picker_widget/src/date_time_picker_type.dart';
 import 'package:date_time_picker_widget/src/week.dart';
-import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -185,7 +184,9 @@ class DateTimePickerViewModel extends BaseViewModel {
     _endDate = DateTime(_endDate!.year, _endDate!.month, _endDate!.day);
 
     numberOfDays = _endDate!.difference(_startDate!).inDays;
-    numberOfWeeks = Jiffy(_endDate).diff(_startDate, Units.WEEK).toInt();
+    numberOfWeeks = Jiffy.parseFromDateTime(_endDate!)
+        .diff(Jiffy.parseFromDateTime(_startDate!), unit: Unit.week)
+        .toInt();
 
     // print('currentDateTime => $currentDateTime');
     // print('_currentDateTime => $_currentDateTime');
@@ -199,7 +200,7 @@ class DateTimePickerViewModel extends BaseViewModel {
 
     for (int i = 0; i < numberOfDays; i++) {
       final date = getNextDate(i);
-      final w = Jiffy(date).week;
+      final w = Jiffy.parseFromDateTime(date).weekOfYear;
 
       if (i == 0) {
         week = Week(number: w, days: _fillWeek(date, toStart: true));
@@ -249,7 +250,9 @@ class DateTimePickerViewModel extends BaseViewModel {
 
     if (toStart) {
       int i = 1;
-      while (Jiffy(date.subtract(Duration(days: i))).week == Jiffy(date).week) {
+      while (Jiffy.parseFromDateTime(date.subtract(Duration(days: i)))
+              .weekOfYear ==
+          Jiffy.parseFromDateTime(date).weekOfYear) {
         dates.insert(
             0,
             Date(
@@ -262,7 +265,8 @@ class DateTimePickerViewModel extends BaseViewModel {
 
     if (toEnd) {
       int i = 1;
-      while (Jiffy(date.add(Duration(days: i))).week == Jiffy(date).week) {
+      while (Jiffy.parseFromDateTime(date.add(Duration(days: i))).weekOfYear ==
+          Jiffy.parseFromDateTime(date).weekOfYear) {
         dates.add(
             Date(index: -1, date: date.add(Duration(days: i)), enabled: false));
         i++;
@@ -421,8 +425,13 @@ class DateTimePickerViewModel extends BaseViewModel {
   }
 
   void onClickNext() {
-    final dt = Jiffy(selectedDate).add(months: 1);
-    final diff = Jiffy(dt).diff(selectedDate, Units.DAY).toInt();
+    final dt = Jiffy.parseFromDateTime(selectedDate!).add(months: 1);
+    final diff = dt
+        .diff(
+          Jiffy.parseFromDateTime(selectedDate!),
+          unit: Unit.day,
+        )
+        .toInt();
 
     if (numberOfDays < selectedDateIndex + diff) {
       selectedDateIndex = numberOfDays - 1;
@@ -435,8 +444,9 @@ class DateTimePickerViewModel extends BaseViewModel {
   }
 
   void onClickPrevious() {
-    final dt = Jiffy(selectedDate).subtract(months: 1);
-    final diff = Jiffy(selectedDate).diff(dt, Units.DAY).toInt();
+    final dt = Jiffy.parseFromDateTime(selectedDate!).subtract(months: 1);
+    final diff =
+        Jiffy.parseFromDateTime(selectedDate!).diff(dt, unit: Unit.day).toInt();
 
     if (selectedDateIndex < diff) {
       selectedDateIndex = 0;

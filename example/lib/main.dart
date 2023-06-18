@@ -12,18 +12,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primaryColor: Colors.blue,
-        accentColor: Colors.blue,
+      theme: ThemeData.from(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
       home: const MyHomePage(title: 'Date Time Picker Demo'),
     );
@@ -31,7 +21,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key key, this.title}) : super(key: key);
+  const MyHomePage({super.key, required this.title});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -50,15 +40,20 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   Color _color = Colors.blue;
-  String _d1, _d2;
-  String _t1, _t2;
+  String _d1 = '', _d2 = '';
+  String _t1 = '', _t2 = '';
+  bool _material3 = true;
 
   @override
   Widget build(BuildContext context) {
     return Theme(
       data: Theme.of(context).copyWith(
-        primaryColor: _color,
-        accentColor: _color,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: _color,
+          primary: _color,
+          secondary: _color,
+        ),
+        useMaterial3: _material3,
       ),
       child: Scaffold(
         appBar: AppBar(
@@ -72,10 +67,23 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   const SizedBox(height: 24),
+                  CheckboxListTile(
+                    value: _material3,
+                    title: Text(
+                      'Use Material 3',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        _material3 = value ?? true;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 24),
                   Text(
                     'Color Pallet',
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: 24),
                   _colorPallet(),
@@ -107,37 +115,40 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _newDatetimePicker(){
     final dt = DateTime.now();
     final dtMin = DateTime.now().add(const Duration(hours: 1, minutes: 0));
-    final dtMax = dtMin.add(const Duration(days: 4,));
-    debugPrint("dt: ${dt.toString()}");
-    debugPrint("dtMin: ${dtMin.toString()}");
-    debugPrint("dtMax: ${dtMax.toString()}");
+    final dtMax = dtMin.add(const Duration(
+      days: 4,
+    ));
+    debugPrint('dt: ${dt.toString()}');
+    debugPrint('dtMin: ${dtMin.toString()}');
+    debugPrint('dtMax: ${dtMax.toString()}');
 
     return Container(
-      child: DateTimePicker(
-        initialSelectedDate: dtMin,
-        startDate: dtMin,//.subtract(const Duration(days: 1)),
-        endDate: dtMax,
-        startTime: dt,
-        endTime: dtMax,
-        timeInterval: const Duration(minutes: 15),
-        datePickerTitle: 'Pick your preferred date',
-        timePickerTitle: 'Pick your preferred time',
-        timeOutOfRangeError: 'Sorry shop is closed now',
-        is24h: false,
-        numberOfWeeksToDisplay: 1,
-        locale: "es",
-        customStringWeekdays: ["D", "L", "M", "X", "J", "V", "S"],
-        onDateChanged: (date) {
-          setState(() {
-            _d1 = DateFormat('dd MMM, yyyy').format(date);
-          });
-        },
-        onTimeChanged: (time) {
-          setState(() {
-            _t1 = DateFormat('hh:mm:ss aa').format(time);
-          });
-        },
-      )/*DateTimePicker(
+        child: DateTimePicker(
+          initialSelectedDate: dtMin,
+          startDate: dtMin,
+          //.subtract(const Duration(days: 1)),
+          endDate: dtMax,
+          startTime: dt,
+          endTime: dtMax,
+          timeInterval: const Duration(minutes: 15),
+          datePickerTitle: 'Pick your preferred date',
+          timePickerTitle: 'Pick your preferred time',
+          timeOutOfRangeError: 'Sorry shop is closed now',
+          is24h: false,
+          numberOfWeeksToDisplay: 1,
+          locale: 'es',
+          customStringWeekdays: const ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+          onDateChanged: (date) {
+            setState(() {
+              _d1 = DateFormat('dd MMM, yyyy').format(date);
+            });
+          },
+          onTimeChanged: (time) {
+            setState(() {
+              _t1 = DateFormat('hh:mm:ss aa').format(time);
+            });
+          },
+        ) /*DateTimePicker(
         /*initialSelectedDate: dtMin.add(const Duration(minutes: 5)),
         startDate: dtMin,
         endDate: dtMax,
@@ -180,13 +191,13 @@ class _MyHomePageState extends State<MyHomePage> {
         Text(
           'Date & Time Picker',
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.headline6,
+          style: Theme.of(context).textTheme.titleLarge,
         ),
         const SizedBox(height: 8),
         Text(
           'Date: $_d1  Time: $_t1',
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.bodyText2,
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
         const SizedBox(height: 16),
         DateTimePicker(
@@ -223,13 +234,13 @@ class _MyHomePageState extends State<MyHomePage> {
         Text(
           'Date Picker',
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.headline6,
+          style: Theme.of(context).textTheme.titleLarge,
         ),
         const SizedBox(height: 8),
         Text(
           'Date: $_d2',
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.bodyText2,
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
         const SizedBox(height: 16),
         DateTimePicker(
@@ -251,13 +262,13 @@ class _MyHomePageState extends State<MyHomePage> {
         Text(
           'Time Picker',
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.headline6,
+          style: Theme.of(context).textTheme.titleLarge,
         ),
         const SizedBox(height: 8),
         Text(
           'Time: $_t2',
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.bodyText2,
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
         const SizedBox(height: 16),
         DateTimePicker(
